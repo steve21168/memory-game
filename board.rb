@@ -3,21 +3,19 @@ class Board
 
  BOARD_MARKS = :x, :y, :w, :k, :o, :p, :z, :u
 
+ def self.generate_cards
+   cards_arr = []
+
+   BOARD_MARKS.each do |mark|
+     2.times { cards_arr << Card.new(mark) }
+   end
+   cards_arr
+ end
+
   def initialize(size=4)
-    @grid = Array.new(size) {Array.new(size)}
-    @cards = []
+    @grid = Array.new(size) { Array.new(size) }
+    @cards = Board.generate_cards.shuffle
     @game_size = size
-  end
-
-  def coordinates
-    coordinates = []
-
-    (0...grid.size).each do |row|
-      (0...grid.size).each do |col|
-        coordinates << [row, col]
-      end
-    end
-    coordinates
   end
 
   def [](pos)
@@ -31,26 +29,19 @@ class Board
   end
 
   def populate
-    shuffled_coordinates = coordinates.shuffle
-    #debugger
-    cards.each_with_index do |card, index|
-      pos = shuffled_coordinates[index]
-      self[pos] = card
+    (0...grid.size).each do |row|
+      (0...grid.size).each do |col|
+        pos = [row, col]
+        self[pos] = cards.pop
+      end
     end
-  end
-
-  def generate_cards
-    BOARD_MARKS.each do |mark|
-      2.times { @cards << Card.new(mark) }
-    end
-
   end
 
   def render
     (0...grid.size).each do |row|
       (0...grid.size).each do |col|
         pos = [row,col]
-        if self[pos].face_up == false
+        unless self[pos].face_up?
           print '[ ]'
         else
           print "[#{self[pos].face_value}]"
@@ -66,6 +57,6 @@ class Board
   end
 
   def won?
-    grid.flatten.all? { |card| card.face_up }
+    grid.flatten.all? { |card| card.face_up? }
   end
 end

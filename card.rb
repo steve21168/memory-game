@@ -12,7 +12,7 @@ class Card
   end
 
   def flip
-    if face_up == false
+    unless face_up?
       self.face_up = true
     else
       self.face_up = false

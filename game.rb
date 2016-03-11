@@ -6,13 +6,12 @@ require 'byebug'
 class Game
   attr_reader :board, :player
 
-  def initialize(board, player)
-    @board = board
-    @player = player
+  def initialize
+    @board = Board.new
+    @player = Player.new
   end
 
   def setup
-    board.generate_cards
     board.populate
   end
 
@@ -48,9 +47,5 @@ class Game
 end
 
 
-
-board = Board.new
-player = Player.new
-game = Game.new(board, player)
-#debugger
+game = Game.new
 game.play
