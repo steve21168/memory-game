@@ -1,4 +1,4 @@
-
+##Computer play wip, game has been greatly refactored since originally wrote
 class Computer
   attr_reader :known_cards, :previous_guess, :first_guess, :second_guess
 
