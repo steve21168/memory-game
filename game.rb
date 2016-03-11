@@ -21,6 +21,13 @@ class Game
     board.render
   end
 
+  def handle_match(first_guess, second_guess)
+    unless board[first_guess].face_value == board[second_guess].face_value
+        board[first_guess].flip
+        board[second_guess].flip
+    end
+  end
+
   def play
     setup
 
@@ -36,10 +43,7 @@ class Game
       sleep(2)
       system('clear')
 
-      unless board[first_guess].face_value == board[second_guess].face_value
-          board[first_guess].flip
-          board[second_guess].flip
-      end
+      handle_match(first_guess, second_guess)
     end
     puts "You are the winner"
   end
