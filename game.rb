@@ -15,9 +15,9 @@ class Game
     board.populate
   end
 
-  def reaveal_and_render(previous_guess)
+  def reaveal_and_render(guess)
     system('clear')
-    board.reveal(previous_guess)
+    board.reveal(guess)
     board.render
   end
 
@@ -26,19 +26,18 @@ class Game
 
     until board.won?
       board.render
-      previous_guess = player.first_guess
-      reaveal_and_render(previous_guess)
 
+      first_guess = player.guess
+      reaveal_and_render(first_guess)
 
-      second_guess = player.second_guess
-      board.reveal(second_guess)
+      second_guess = player.guess
+      reaveal_and_render(second_guess)
 
-      board.render
       sleep(2)
       system('clear')
 
-      unless board[previous_guess].face_value == board[second_guess].face_value
-          board[previous_guess].flip
+      unless board[first_guess].face_value == board[second_guess].face_value
+          board[first_guess].flip
           board[second_guess].flip
       end
     end

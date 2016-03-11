@@ -1,7 +1,7 @@
 class Board
  attr_reader :grid, :cards, :game_size
 
- BOARD_MARKS = :x, :y, :w, :k, :o, :p, :z, :u
+ BOARD_MARKS = [:x, :y, :w, :k, :o, :p, :z, :u]
 
  def self.generate_cards
    cards_arr = []
